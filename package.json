@@ -1,0 +1,12 @@
+{
+  "name": "paradumu-sekotajs",
+  "version": "1.0.0",
+  "description": "Mobila timekla lietotne veseligu paradumu sekosanai",
+  "scripts": {
+    "test": "node tests/logic.test.js && node tests/ui.integration.test.js",
+    "test:logic": "node tests/logic.test.js",
+    "test:ui": "node tests/ui.integration.test.js"
+  },
+  "devDependencies": { "jsdom": "^24.0.0" },
+  "license": "MIT"
+}

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="lv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#16324f">
+  <title>Paradumu sekotājs</title>
+  <style>
+    :root{
+      --navy:#16324f; --green:#2e8b57; --green-d:#1f6b40;
+      --red:#c0392b; --bg:#eef2f6; --card:#ffffff; --line:#d8e0e8;
+      --ink:#1d2733; --muted:#6b7785; --soft:#eef7f0;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; height:100%; }
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:var(--bg); color:var(--ink);
+      display:flex; justify-content:center; align-items:stretch;
+    }
+    #app{
+      width:100%; max-width:430px; min-height:100vh; background:var(--card);
+      display:flex; flex-direction:column; position:relative;
+      box-shadow:0 0 24px rgba(0,0,0,.08);
+    }
+    .screen{ display:flex; flex-direction:column; flex:1; padding:20px 18px 96px; }
+    .hidden{ display:none !important; }
+
+    /* Header */
+    header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+    header h1{ font-size:24px; margin:0; color:var(--navy); }
+    header #today{ margin:2px 0 0; font-size:12px; color:var(--muted); }
+    .ring{ position:relative; width:52px; height:52px; flex:none; }
+    .ring svg{ transform:rotate(-90deg); }
+    #ring-text{
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+      font-size:12px; font-weight:700; color:var(--green-d);
+    }
+
+    /* Habit list */
+    ul#habit-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+    .habit{
+      display:flex; align-items:center; gap:12px; padding:12px 14px;
+      border:1px solid var(--line); border-radius:14px; background:#fafcfe; cursor:pointer;
+      transition:border-color .15s, background .15s;
+    }
+    .habit.done{ background:var(--soft); border-color:#bcdcc7; }
+    .habit.selected{ border-color:var(--navy); box-shadow:0 0 0 2px rgba(22,50,79,.15); }
+    .check{
+      flex:none; width:34px; height:34px; border-radius:50%; cursor:pointer;
+      border:2px solid #b9c4d0; background:#fff; color:#fff; font-size:15px; font-weight:700;
+    }
+    .habit.done .check{ background:var(--green); border-color:var(--green); }
+    .habit .check{ color:var(--navy); }
+    .habit.done .check{ color:#fff; }
+    .info{ display:flex; flex-direction:column; min-width:0; }
+    .info .name{ font-size:15px; font-weight:600; }
+    .habit.done .info .name{ text-decoration:line-through; color:var(--green-d); }
+    .info .sub{ font-size:12px; color:var(--muted); margin-top:1px; }
+
+    .empty{ text-align:center; color:var(--muted); margin-top:60px; line-height:1.6; }
+
+    /* Bottom actions */
+    .actions{
+      position:absolute; left:0; right:0; bottom:0; height:88px;
+      display:flex; align-items:center; justify-content:center; gap:24px;
+      background:linear-gradient(transparent, #fff 38%);
+    }
+    .fab{
+      width:58px; height:58px; border-radius:50%; border:none; cursor:pointer;
+      color:#fff; font-size:24px; font-weight:700; box-shadow:0 4px 12px rgba(0,0,0,.18);
+    }
+    .fab.add{ background:var(--green); }
+    .fab.del{ background:var(--red); font-size:18px; }
+    .fab:active{ transform:scale(.94); }
+
+    /* Form */
+    #screen-form h1{ font-size:22px; color:var(--navy); margin:0 0 18px; }
+    label{ display:block; font-size:13px; color:var(--muted); margin:14px 0 0; }
+    input,select{
+      width:100%; margin-top:6px; padding:11px 12px; font-size:15px;
+      border:1px solid var(--line); border-radius:10px; background:#fafcfe; color:var(--ink);
+    }
+    input:focus,select:focus{ outline:none; border-color:var(--navy); }
+    .row{ display:flex; gap:10px; }
+    .row input{ width:50%; }
+    .error{
+      margin-top:14px; padding:10px 12px; border-radius:10px;
+      background:#fdecea; color:#b03127; font-size:13px; border:1px solid #f3c4bf;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+
+    <!-- ===== Ekrāns 1: Paradumu saraksts (K1) ===== -->
+    <section id="screen-list" class="screen">
+      <header>
+        <div>
+          <h1>Paradumi</h1>
+          <p id="today"></p>
+        </div>
+        <div class="ring">
+          <svg width="52" height="52" viewBox="0 0 52 52">
+            <circle cx="26" cy="26" r="18" fill="none" stroke="#dfe6ee" stroke-width="6"/>
+            <circle id="ring-fg" cx="26" cy="26" r="18" fill="none" stroke="#2e8b57"
+                    stroke-width="6" stroke-linecap="round"
+                    stroke-dasharray="113.1" stroke-dashoffset="113.1"/>
+          </svg>
+          <span id="ring-text">0/0</span>
+        </div>
+      </header>
+
+      <ul id="habit-list"></ul>
+      <p id="empty" class="empty hidden">Vēl nav neviena paraduma.<br>Pievieno pirmo ar pogu <b>+</b>.</p>
+
+      <div class="actions">
+        <button id="btn-add" class="fab add" title="Pievienot paradumu">+</button>
+        <button id="btn-del" class="fab del" title="Dzēst izvēlēto paradumu">Dz</button>
+      </div>
+    </section>
+
+    <!-- ===== Ekrāns 2: Jauns paradums (K2, K5) ===== -->
+    <section id="screen-form" class="screen hidden">
+      <h1>Jauns paradums</h1>
+
+      <label>Nosaukums
+        <input id="f-name" type="text" maxlength="40" placeholder="Piem., Izdzert ūdeni">
+      </label>
+
+      <label>Mērķis (neobligāts)
+        <div class="row">
+          <input id="f-goal" type="number" min="1" step="1" placeholder="8">
+          <input id="f-unit" type="text" maxlength="12" placeholder="glāzes">
+        </div>
+      </label>
+
+      <label>Biežums
+        <select id="f-freq">
+          <option>Katru dienu</option>
+          <option>Darba dienās</option>
+          <option>Nedēļas nogalē</option>
+        </select>
+      </label>
+
+      <p id="form-error" class="error hidden"></p>
+
+      <div class="actions">
+        <button id="btn-cancel" class="fab del" title="Atcelt">✕</button>
+        <button id="btn-save" class="fab add" title="Apstiprināt">✓</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="js/logic.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
