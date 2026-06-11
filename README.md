@@ -9,12 +9,11 @@ Projekts ir realizēts pēc iepriekš izstrādātās programmatūras prasību sp
 ## Funkcijas (atbilstoši specifikācijai)
 
 | ID | Funkcija | Apraksts |
-|----|----------|----------|
-| K1 | Apskatīt paradumu sarakstu | Parāda visus paradumus un to izpildi dienai, kā arī dienas progresu. |
-| K2 | Pievienot paradumu | Pievieno jaunu paradumu caur formu “Jauns paradums”. |
-| K3 | Atzīmēt kā izpildītu | Atzīmē paraduma izpildi; mērķa paradumiem skaita pieskārienus. |
-| K4 | Dzēst paradumu | Dzēš izvēlēto paradumu (ar apstiprinājumu). |
-| K5 | Ievadīt paraduma datus | Validē un sagatavo paraduma datus (izmanto K2). |
+| K1 | Apskatīt paradumu sarakstu | Parāda visus paradumus un to izpildi dienai
+| K2 | Pievienot paradumu | Pievieno jaunu paradumu caur formu “Jauns paradums”
+| K3 | Atzīmēt kā izpildītu | Atzīmē paraduma izpildi; mērķa paradumiem skaita pieskārienus
+| K4 | Dzēst paradumu | Dzēš izvēlēto paradumu
+| K5 | Ievadīt paraduma datus | Validē un sagatavo paraduma datus
 
 ## Tehnoloģijas
 
