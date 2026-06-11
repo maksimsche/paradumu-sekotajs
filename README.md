@@ -28,7 +28,7 @@ Projekts ir realizēts pēc iepriekš izstrādātās programmatūras prasību sp
 paradumu-sekotajs/
 ├── index.html            # Saskarne un stili
 ├── js/
-│   ├── logic.js          # Tīrā loģika (validācija, atzīmēšana, progress) — testējama
+│   ├── logic.js          # Tīrā loģika (validācija, atzīmēšana, progress)
 │   └── app.js            # Saskarnes loģika (DOM, notikumi, localStorage)
 ├── tests/
 │   ├── logic.test.js     # Vienībtesti loģikai
@@ -45,7 +45,7 @@ Pietiek atvērt `index.html` pārlūkprogrammā. Datu glabāšanai (`localStorag
 caur GitHub Pages vai lokālu serveri, piemēram:
 
 ```bash
-# vienkāršs lokāls serveris (ja ir Python)
+# vienkāršs lokāls serveris
 python3 -m http.server 8000
 # pēc tam pārlūkā: http://localhost:8000
 ```
