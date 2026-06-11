@@ -39,7 +39,3 @@ saskarne reaģē pareizi uz lietotāja darbībām un kļūdainu ievadi.
 2. **Pēc pārlādēšanas izpilde nereti “pazuda” tajā pašā dienā.**
    Sākotnēji dienas atiestatīšana nostrādāja par bieži.
    *Risinājums:* datums tiek glabāts atsevišķi un salīdzināts ar `isNewDay()`; atiestatīšana notiek tikai jaunā dienā.
-
-## 5. Secinājums
-Visi 14 manuālie testa gadījumi un 36 automātiskās pārbaudes ir izpildīti veiksmīgi.
-Lietotne atbilst specifikācijai un apstrādā kļūdainu ievadi korekti.
